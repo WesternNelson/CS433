@@ -7,8 +7,14 @@ SRCS = main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
-$(PROG) : $(SRCS) $(HDRS)
+$(PROG): $(SRCS) $(HDRS) format check
 	$(CC) $(SRCS) -o $(PROG) $(CFLAGS)
 
-clean :
-	rm -f core $(PROG) $(OBJS)
+clean:
+	rm -f core $(PROG) $(OBJS) *.orig
+
+format:
+	astyle -YfDHUbps4yj -k3 $(SRCS)
+
+check: 
+	cppcheck $(CHKFLAGS) $(SRCS)
