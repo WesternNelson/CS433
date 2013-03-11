@@ -20,11 +20,9 @@ $(PROG): $(OBJ)
 	$(CC) -c $(CFLAGS) $(SRC)
 	$(CC) $(CFLAGS) -o $(PROG) $(OBJ) $(LDFLAGS) $(LIB)
 
-
 # cleanup
 clean:
 	/bin/rm -f *.o $(PROG) *.orig
-
 
 format:
 	astyle -YfDHUbps4yj -k3 $(SRC) $(HDRS)
