@@ -14,7 +14,7 @@ clean:
 	rm -f core $(PROG) $(OBJS) *.orig
 
 format:
-	astyle -YfDHUbps4yj -k3 $(SRCS)
+	astyle -YfDHUbps4yj -k3 $(SRCS) $(HDRS)
 
 check: 
-	cppcheck $(CHKFLAGS) $(SRCS)
+	cppcheck $(CHKFLAGS) $(SRCS) $(HDRS)
