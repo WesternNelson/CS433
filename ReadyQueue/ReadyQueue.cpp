@@ -23,7 +23,7 @@ struct ReadyQueue
 {
     static const int QUEUE_SIZE = 10;
     ProcessControlBlock *items[QUEUE_SIZE];
-    char head;
+    int head;
 
     ReadyQueue()
     {
@@ -32,7 +32,7 @@ struct ReadyQueue
 
     void ageQueue()
     {
-        for ( char tail = head + 1; tail < QUEUE_SIZE; tail++ )
+        for ( int tail = head + 1; tail < QUEUE_SIZE; ++tail )
         {
             char priority = items[tail]->priority;
 
@@ -63,13 +63,15 @@ struct ReadyQueue
         // Single node by itself is always the smallest
         if ( queue_length > 1 )
         {
-            for ( char root = head + ( queue_length >> 1 ); root >= tail; root-- )
+            for ( int root = head + ( queue_length >> 1 );
+                    root >= tail;
+                    --root )
             {
-                char left_leaf = ( root << 1 ) + 1 - tail;
-                char right_leaf = left_leaf + 1;
+                int left_leaf = ( root << 1 ) + 1 - tail;
+                int right_leaf = left_leaf + 1;
 
                 // find the smallest leaf
-                char leaf;
+                int leaf;
 
                 if ( right_leaf == QUEUE_SIZE )
                 {
@@ -109,9 +111,13 @@ struct ReadyQueue
     {
         printf( "Queue:\n" );
 
-        for ( char i = head + 1; i < QUEUE_SIZE; i++ )
+        for ( int i = head + 1; i < QUEUE_SIZE; ++i )
         {
-            printf( "%2i: PID %2i Priority %2i State %2i\n", i, items[i]->processId, items[i]->priority, items[i]->processState );
+            printf( "%2i: PID %2i Priority %2i State %2i\n",
+                    i,
+                    items[i]->processId,
+                    items[i]->priority,
+                    items[i]->processState );
         }
 
         return;
@@ -122,7 +128,7 @@ void TestOne()
 {
     ProcessControlBlock *pcb_table = new ProcessControlBlock[20];
 
-    for ( char i = 0; i < 20; i++ )
+    for ( int i = 0; i < 20; ++i )
     {
         pcb_table[i].processId = i;
         pcb_table[i].priority = i;
@@ -163,7 +169,7 @@ void TestTwo()
 {
     ProcessControlBlock *pcb_table = new ProcessControlBlock[20];
 
-    for ( char i = 0; i < 20; i++ )
+    for ( int i = 0; i < 20; ++i )
     {
         pcb_table[i].processId = i;
     }
